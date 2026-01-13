@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="sq" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endrit Krasniqi | Arkitekt</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root { --bg: #080808; --text: #ffffff; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-heading { font-family: 'Syncopate', sans-serif; }
+        #cursor { transition: transform 0.2s ease-out; }
+
+        .outline-text {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+            color: transparent;
+            transition: all 0.6s ease;
+        }
+        .hero-group:hover .outline-text, .hero-group:active .outline-text { 
+            -webkit-text-stroke: 1px rgba(255,255,255,1); 
+            color: white;
+        }
+
+        .project-row {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.5s ease;
+        }
+
+        @media (min-width: 1024px) {
+            .project-img-container {
+                clip-path: inset(100% 0 0 0);
+                transition: clip-path 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .project-row:hover .project-img-container { clip-path: inset(0 0 0 0); }
+            .project-row:hover img { transform: scale(1); }
+        }
+
+        @media (max-width: 1023px) {
+            .project-img-container {
+                clip-path: inset(100% 0 0 0);
+                margin-top: 2rem;
+            }
+            .project-img-container.is-in-view {
+                clip-path: inset(0 0 0 0);
+                transition: clip-path 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+        }
+
+        .project-img-container img {
+            transform: scale(1.3);
+            transition: transform 2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        #mobile-overlay {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        #mobile-overlay.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        .lang-btn.active { opacity: 1; border-bottom: 1px solid white; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor" class="fixed w-4 h-4 bg-white rounded-full pointer-events-none z-[999] mix-blend-difference hidden md:block"></div>
+
+    <header class="fixed top-0 w-full z-[110] px-6 py-8 md:px-12 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="font-heading text-lg tracking-[0.3em] font-bold">E.KRASNIQI</a>
+        <nav class="hidden md:flex items-center space-x-12 text-[10px] tracking-[0.4em] uppercase font-medium">
+            <a href="index.html" class="lang hover:text-neutral-400 transition underline underline-offset-8" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang hover:text-neutral-400 transition" data-sq="Rreth" data-de="Über uns">Rreth</a>
+            <a href="services.html" class="lang hover:text-neutral-400 transition" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang hover:text-neutral-400 transition" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            <div class="flex gap-3 ml-6 border-l border-white/20 pl-6">
+                <button onclick="changeLanguage('sq')" class="lang-btn btn-sq opacity-40 hover:opacity-100 transition">SQ</button>
+                <button onclick="changeLanguage('de')" class="lang-btn btn-de opacity-40 hover:opacity-100 transition">DE</button>
+            </div>
+        </nav>
+        <button id="menu-trigger" class="md:hidden flex flex-col items-end gap-2 relative z-[120]">
+            <span id="line1" class="w-8 h-[1px] bg-white transition-all"></span>
+            <span id="line2" class="w-5 h-[1px] bg-white transition-all"></span>
+        </button>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-[#0f0f0f] z-[105] flex flex-col justify-center px-8 md:hidden text-center">
+        <div class="space-y-8 mb-12">
+            <a href="index.html" class="lang block font-heading text-3xl uppercase" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang block font-heading text-3xl uppercase" data-sq="Rreth" data-de="Über uns">Rreth</a>
+            <a href="services.html" class="lang block font-heading text-3xl uppercase" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang block font-heading text-3xl uppercase" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+        </div>
+        <div class="flex justify-center gap-6 pt-8 border-t border-white/10">
+            <button onclick="changeLanguage('sq')" class="lang-btn btn-sq text-xs tracking-widest opacity-40 uppercase">SQ</button>
+            <button onclick="changeLanguage('de')" class="lang-btn btn-de text-xs tracking-widest opacity-40 uppercase">DE</button>
+        </div>
+    </div>
+
+    <main>
+        <section class="min-h-screen flex flex-col justify-center px-6 md:px-20">
+            <div class="reveal hero-group inline-block cursor-default">
+                <h2 class="lang text-[10px] tracking-[0.6em] uppercase text-neutral-500 mb-6" data-sq="Studio Arkitekture" data-de="Architekturbüro">Studio Arkitekture</h2>
+                <h1 class="font-heading text-5xl md:text-[8vw] leading-[0.85] uppercase mb-10">
+                    Endrit <br> <span class="outline-text">Krasniqi</span>
+                </h1>
+            </div>
+        </section>
+
+        <section id="work" class="pb-40">
+            <div class="px-6 md:px-20 mb-20">
+                <h2 class="lang font-heading text-4xl md:text-6xl uppercase" data-sq="Projekte" data-de="Projekte">Projekte</h2>
+            </div>
+
+            <div class="project-row group px-6 md:px-20 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div class="order-2 md:order-1">
+                    <span class="lang text-[10px] tracking-[0.4em] opacity-40 uppercase mb-4 block" data-sq="01 / Komerciale" data-de="01 / Gewerbe">01 / Commercial</span>
+                    <h3 class="font-heading text-3xl md:text-5xl uppercase mb-6 group-hover:italic transition-all">Skyline Offices</h3>
+                    <p class="lang text-sm text-neutral-400 max-w-sm font-light leading-relaxed mb-8" data-sq="Një qendër inovative zyrash, projektuar për të maksimizuar dritën dhe bashkëpunimin." data-de="Ein innovatives Bürozentrum, konzipiert für maximale Lichtausbeute und Zusammenarbeit.">Një qendër inovative zyrash, projektuar për të maksimizuar dritën dhe bashkëpunimin.</p>
+                    <div class="lang text-[10px] tracking-widest opacity-60 uppercase" data-sq="Gelsenkirchen, Gjermani" data-de="Gelsenkirchen, Deutschland">Gelsenkirchen, Germany</div>
+                </div>
+                <div class="order-1 md:order-2 project-img-container aspect-[16/10] overflow-hidden bg-neutral-900">
+                    <img src="Images/19a8644a74b7cf6dc8dea462efb14e90.jpg" alt="Office" class="w-full h-full object-cover grayscale md:group-hover:grayscale-0 transition-all duration-700">
+                </div>
+            </div>
+
+            <div class="project-row group px-6 md:px-20 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 items-center border-b border-white/10">
+                <div class="order-1 project-img-container aspect-[16/10] overflow-hidden bg-neutral-900">
+                    <img src="Images/unnamed.jpg" alt="Complex" class="w-full h-full object-cover grayscale md:group-hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="order-2 pl-0 md:pl-20">
+                    <span class="lang text-[10px] tracking-[0.4em] opacity-40 uppercase mb-4 block" data-sq="02 / Përdorim i përzier" data-de="02 / Mischnutzung">02 / Mixed-Use</span>
+                    <h3 class="font-heading text-3xl md:text-5xl uppercase mb-6 group-hover:italic transition-all">Urban Hub RE</h3>
+                    <p class="lang text-sm text-neutral-400 max-w-sm font-light leading-relaxed mb-8" data-sq="Kompleks banesor që integron hapësira pune bashkëkohore." data-de="Wohnkomplex mit integrierten modernen Arbeitsräumen.">Kompleks banesor që integron hapësira pune bashkëkohore.</p>
+                    <div class="lang text-[10px] tracking-widest opacity-60 uppercase" data-sq="Recklinghausen, Gjermani" data-de="Recklinghausen, Deutschland">Recklinghausen, Germany</div>
+                </div>
+            </div>
+
+            <div class="project-row group px-6 md:px-20 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 items-center border-b border-white/10">
+                <div class="order-2 md:order-1">
+                    <span class="lang text-[10px] tracking-[0.4em] opacity-40 uppercase mb-4 block" data-sq="03 / Interier" data-de="03 / Interieur">03 / Interior</span>
+                    <h3 class="font-heading text-3xl md:text-5xl uppercase mb-6 group-hover:italic transition-all">Apartment Design</h3>
+                    <p class="lang text-sm text-neutral-400 max-w-sm font-light leading-relaxed mb-8" data-sq="Riorganizimi i hapësirës urbane për të krijuar një ambient funksional." data-de="Umgestaltung des städtischen Raums für ein funktionales Wohnumfeld.">Riorganizimi i hapësirës urbane për të krijuar një ambient funksional.</p>
+                    <div class="lang text-[10px] tracking-widest opacity-60 uppercase" data-sq="Prishtinë, Kosovë" data-de="Prishtina, Kosovo">Prishtinë, Kosovë</div>
+                </div>
+                <div class="order-1 md:order-2 project-img-container aspect-[16/10] overflow-hidden bg-neutral-900">
+                    <img src="Images/apartment-arrangement-ideas.jpg" alt="Apartment" class="w-full h-full object-cover grayscale md:group-hover:grayscale-0 transition-all duration-700">
+                </div>
+            </div>
+
+            <div class="project-row group px-6 md:px-20 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div class="order-1 project-img-container aspect-[16/10] overflow-hidden bg-neutral-900">
+                    <img src="Images/atlasplan-049-00-desert-soul-clip_1920_1080_50.jpg" alt="Living Concept" class="w-full h-full object-cover grayscale md:group-hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="order-2 pl-0 md:pl-20">
+                    <span class="lang text-[10px] tracking-[0.4em] opacity-40 uppercase mb-4 block" data-sq="04 / Rezidencial" data-de="04 / Wohnbau">04 / Residential</span>
+                    <h3 class="font-heading text-3xl md:text-5xl uppercase mb-6 group-hover:italic transition-all">Living Concept</h3>
+                    <p class="lang text-sm text-neutral-400 max-w-sm font-light leading-relaxed mb-8" data-sq="Minimalizëm rezidencial i ndërthurur me dritën natyrale." data-de="Wohnminimalismus kombiniert mit natürlichem Lichteinfall.">Minimalizëm rezidencial i ndërthurur me dritën natyrale.</p>
+                    <div class="lang text-[10px] tracking-widest opacity-60 uppercase" data-sq="Ratkoc, Kosovë" data-de="Ratkoc, Kosovo">Ratkoc, Kosovë</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-20 px-6 md:px-20 border-t border-white/5 text-center">
+        <p class="text-[10px] tracking-widest uppercase opacity-40">Endrit Krasniqi &copy; 2026</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
+
+        const trigger = document.getElementById('menu-trigger');
+        const overlay = document.getElementById('mobile-overlay');
+        trigger.onclick = () => {
+            trigger.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+        };
+
+        document.querySelectorAll('.project-img-container').forEach((container) => {
+            ScrollTrigger.create({
+                trigger: container,
+                start: "top 85%",
+                onEnter: () => {
+                    container.classList.add('is-in-view');
+                    gsap.to(container.querySelector('img'), { scale: 1, duration: 2, ease: "power4.out" });
+                }
+            });
+        });
+
+        window.onload = () => {
+            gsap.from(".reveal", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out" });
+            const savedLang = localStorage.getItem('selectedLanguage') || 'sq';
+            changeLanguage(savedLang);
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.innerText = text;
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll(`.btn-${lang}`).forEach(btn => btn.classList.add('active'));
+            localStorage.setItem('selectedLanguage', lang);
+        }
+    </script>
+</body>
+</html>

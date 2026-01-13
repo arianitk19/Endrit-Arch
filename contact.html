@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="sq" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt | Endrit Krasniqi</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        :root { --bg: #080808; --text: #ffffff; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-heading { font-family: 'Syncopate', sans-serif; }
+        
+        #mobile-overlay {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        #mobile-overlay.active {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Form Styling */
+        .contact-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+            width: 100%;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            outline: none;
+            color: white;
+            font-weight: 200;
+            font-size: 1.1rem;
+        }
+        .contact-input:focus {
+            border-bottom: 1px solid white;
+            padding-left: 10px;
+        }
+
+        .burger-line { transition: all 0.4s ease; }
+        .active #line1 { transform: translateY(5px) rotate(45deg); }
+        .active #line2 { transform: translateY(-5px) rotate(-45deg); width: 100% !important; }
+        
+        .lang-btn.active { opacity: 1; border-bottom: 1px solid white; }
+
+        .reveal { opacity: 0; transform: translateY(20px); }
+        
+        /* Custom Button Hover */
+        .submit-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        .submit-btn:hover {
+            letter-spacing: 0.8em;
+            background: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor" class="fixed w-4 h-4 bg-white rounded-full pointer-events-none z-[999] mix-blend-difference hidden md:block"></div>
+
+    <header class="fixed top-0 w-full z-[100] px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="font-heading text-lg tracking-[0.3em] font-bold">E.KRASNIQI</a>
+        
+        <nav class="hidden md:flex items-center space-x-12 text-[10px] tracking-[0.4em] uppercase font-medium">
+            <a href="index.html" class="lang hover:text-neutral-400 transition" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang hover:text-neutral-400 transition" data-sq="Rreth" data-de="Über uns">Rreth</a>
+            <a href="services.html" class="lang hover:text-neutral-400 transition" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang hover:text-neutral-400 transition underline underline-offset-8" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            
+            <div class="flex gap-3 border-l border-white/20 pl-6 ml-4">
+                <button onclick="changeLanguage('sq')" id="btn-sq" class="lang-btn opacity-40 hover:opacity-100 transition">SQ</button>
+                <button onclick="changeLanguage('de')" id="btn-de" class="lang-btn opacity-40 hover:opacity-100 transition">DE</button>
+            </div>
+        </nav>
+
+        <button id="menu-trigger" class="md:hidden flex flex-col items-end gap-2 relative z-[110]">
+            <span id="line1" class="burger-line w-8 h-[1px] bg-white"></span>
+            <span id="line2" class="burger-line w-5 h-[1px] bg-white"></span>
+        </button>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-[#0f0f0f] z-[105] flex flex-col justify-center px-8 md:hidden">
+        <div class="space-y-8 text-center">
+            <a href="index.html" class="lang block font-heading text-4xl uppercase" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang block font-heading text-4xl uppercase" data-sq="Rreth" data-de="Über uns">Rreth</a>
+            <a href="services.html" class="lang block font-heading text-4xl uppercase" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang block font-heading text-4xl uppercase" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            <div class="flex justify-center gap-6 mt-10 pt-10 border-t border-white/10">
+                <button onclick="changeLanguage('sq')" class="text-xs uppercase tracking-widest">Shqip</button>
+                <button onclick="changeLanguage('de')" class="text-xs uppercase tracking-widest">Deutsch</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-32 md:pt-44 px-6 md:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
+            <div class="md:col-span-5 reveal">
+                <h1 class="lang font-heading text-4xl md:text-7xl uppercase leading-none mb-10" data-sq="Kontakt" data-de="Kontakt">Kontakt</h1>
+                
+                <div class="space-y-10">
+                    <div>
+                        <p class="lang text-neutral-500 tracking-[0.4em] uppercase text-[9px] mb-3" data-sq="Lokacioni" data-de="Standort">Lokacioni</p>
+                        <p class="lang text-xl font-light hover:pl-2 transition-all duration-500 cursor-default" data-sq="Recklinghausen, Germany" data-de="Recklinghausen, Germany">Recklinghausen, Germany</p>
+                    </div>
+                    
+                    <div>
+                        <p class="lang text-neutral-500 tracking-[0.4em] uppercase text-[9px] mb-3" data-sq="E-Mail" data-de="E-Mail">E-Mail</p>
+                        <a href="mailto:info@endritkrasniqi.com" class="text-xl font-light hover:text-neutral-400 transition-colors duration-300">info@endritkrasniqi.com</a>
+                    </div>
+
+                    <div>
+                        <p class="lang text-neutral-500 tracking-[0.4em] uppercase text-[9px] mb-3" data-sq="Rrjetet Sociale" data-de="Social Media">Rrjetet Sociale</p>
+                        <div class="flex gap-6">
+                            <a href="https://www.instagram.com/endritk_/" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="text-[10px] tracking-widest uppercase border-b border-white/10 hover:border-white transition-all duration-500 py-1">
+                               Instagram
+                            </a>
+                            <a href="https://www.linkedin.com/in/endrit-krasniqi-1a1a24271/" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="text-[10px] tracking-widest uppercase border-b border-white/10 hover:border-white transition-all duration-500 py-1">
+                               LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-7 reveal">
+                <form action="#" class="space-y-10 md:space-y-14">
+                    <div class="group">
+                        <label class="lang text-[9px] uppercase tracking-[0.4em] text-neutral-600 transition group-focus-within:text-white" data-sq="Emri juaj" data-de="Ihr Name">Emri juaj</label>
+                        <input type="text" class="contact-input" required>
+                    </div>
+                    
+                    <div class="group">
+                        <label class="lang text-[9px] uppercase tracking-[0.4em] text-neutral-600 transition group-focus-within:text-white" data-sq="Email Adresa" data-de="Email Adresse">Email Adresa</label>
+                        <input type="email" class="contact-input" required>
+                    </div>
+                    
+                    <div class="group">
+                        <label class="lang text-[9px] uppercase tracking-[0.4em] text-neutral-600 transition group-focus-within:text-white" data-sq="Mesazhi" data-de="Nachricht">Mesazhi</label>
+                        <textarea rows="3" class="contact-input resize-none" required></textarea>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <button type="submit" class="lang submit-btn font-heading text-[10px] tracking-[0.5em] uppercase border border-white/20 px-10 py-5 rounded-full" 
+                                data-sq="Dërgo Mesazhin" data-de="Senden">
+                            Dërgo Mesazhin
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 px-6 md:px-12 mt-12 border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="lang text-[9px] tracking-[0.4em] opacity-20 uppercase" data-sq="© 2026 Endrit Krasniqi" data-de="© 2026 Endrit Krasniqi">© 2026 Endrit Krasniqi</p>
+            <div class="flex gap-8 text-[9px] tracking-widest uppercase opacity-40">
+                <a href="https://www.instagram.com/endritk_/" target="_blank" rel="noopener noreferrer" class="hover:opacity-100 transition">Instagram</a>
+                <a href="https://www.linkedin.com/in/endrit-krasniqi-1a1a24271/" target="_blank" rel="noopener noreferrer" class="hover:opacity-100 transition">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cursor Logic
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
+
+        // Mobile Menu Logic
+        const trigger = document.getElementById('menu-trigger');
+        const overlay = document.getElementById('mobile-overlay');
+        trigger.onclick = () => {
+            trigger.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+        };
+
+        // GJUHA (SQ / DE)
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.innerText = text;
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if(document.getElementById(`btn-${lang}`)) {
+                document.getElementById(`btn-${lang}`).classList.add('active');
+            }
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // GSAP Animations
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'sq';
+            changeLanguage(savedLang);
+
+            gsap.to('.reveal', {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: "expo.out"
+            });
+        });
+    </script>
+</body>
+</html>

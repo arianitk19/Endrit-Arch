@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="sq" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rreth Meje | Endrit Krasniqi</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root { --bg: #080808; --text: #ffffff; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-heading { font-family: 'Syncopate', sans-serif; }
+        
+        #mobile-overlay {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        #mobile-overlay.active {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .burger-line { transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .active #line1 { transform: translateY(5px) rotate(45deg); }
+        .active #line2 { transform: translateY(-5px) rotate(-45deg); width: 100% !important; }
+
+        .image-reveal { clip-path: inset(0 100% 0 0); transition: clip-path 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .image-reveal.visible { clip-path: inset(0 0 0 0); }
+        
+        .lang-btn.active { opacity: 1; border-bottom: 1px solid white; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor" class="fixed w-4 h-4 bg-white rounded-full pointer-events-none z-[999] mix-blend-difference hidden md:block"></div>
+
+    <header class="fixed top-0 w-full z-[100] px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="font-heading text-lg tracking-[0.3em] font-bold">E.KRASNIQI</a>
+        
+        <nav class="hidden md:flex items-center space-x-12 text-[10px] tracking-[0.4em] uppercase font-medium">
+            <a href="index.html" class="lang hover:text-neutral-400 transition" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang hover:text-neutral-400 transition underline underline-offset-8" data-sq="Rreth" data-de="Über mich">Rreth</a>
+            <a href="services.html" class="lang hover:text-neutral-400 transition" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang hover:text-neutral-400 transition" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            
+            <div class="flex gap-3 border-l border-white/20 pl-6 ml-4">
+                <button onclick="changeLanguage('sq')" id="btn-sq" class="lang-btn opacity-40 hover:opacity-100 transition">SQ</button>
+                <button onclick="changeLanguage('de')" id="btn-de" class="lang-btn opacity-40 hover:opacity-100 transition">DE</button>
+            </div>
+        </nav>
+
+        <button id="menu-trigger" class="md:hidden flex flex-col items-end gap-2 relative z-[110]">
+            <span id="line1" class="burger-line w-8 h-[1px] bg-white"></span>
+            <span id="line2" class="burger-line w-5 h-[1px] bg-white"></span>
+        </button>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-[#0f0f0f] z-[105] flex flex-col justify-center px-8 md:hidden">
+        <div class="space-y-8 text-center">
+            <a href="index.html" class="lang block font-heading text-4xl uppercase" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang block font-heading text-4xl uppercase" data-sq="Rreth" data-de="Über mich">Rreth</a>
+            <a href="services.html" class="lang block font-heading text-4xl uppercase" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang block font-heading text-4xl uppercase" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            
+            <div class="flex justify-center gap-6 mt-10 pt-10 border-t border-white/10">
+                <button onclick="changeLanguage('sq')" class="text-xs uppercase tracking-widest">Shqip</button>
+                <button onclick="changeLanguage('de')" class="text-xs uppercase tracking-widest">Deutsch</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-32 md:pt-48 px-6 md:px-12">
+        
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20 md:mb-24">
+            <div class="md:col-span-10">
+                <h1 class="lang font-heading text-4xl md:text-7xl uppercase leading-none mb-6 reveal"
+                    data-sq="Filozofia e Hapësirës" data-de="Philosophie des Raums">Filozofia e Hapësirës</h1>
+                <p class="lang max-w-2xl text-base md:text-lg text-neutral-300 font-light leading-relaxed reveal"
+                    data-sq="Endrit Krasniqi është një arkitekt vizionar i cili beson se arkitektura nuk është thjesht ndërtim, por një dialog midis formës dhe shpirtit."
+                    data-de="Endrit Krasniqi ist ein visionärer Architekt, der glaubt, dass Architektur nicht nur Bauen ist.">
+                    Endrit Krasniqi është një arkitekt vizionar i cili beson se arkitektura nuk është thjesht ndërtim, por një dialog midis formës dhe shpirtit.
+                </p>
+            </div>
+        </section>
+
+        <section class="mb-20 md:mb-24 py-12 border-y border-white/5">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+                <div class="md:col-span-4 reveal">
+                    <span class="text-[9px] tracking-[0.5em] text-neutral-500 uppercase mb-3 block">01. Koncepti</span>
+                    <h4 class="lang font-heading text-base mb-3 uppercase" data-sq="Analiza" data-de="Analyse">Analiza</h4>
+                    <p class="lang text-sm text-neutral-400 leading-relaxed font-light" data-sq="Kuptimi i terrenit dhe nevojave njerëzore." data-de="Verständnis des Geländes.">Kuptimi i terrenit dhe nevojave njerëzore. Ne skicojmë eksperienca.</p>
+                </div>
+                <div class="md:col-span-4 reveal">
+                    <span class="text-[9px] tracking-[0.5em] text-neutral-500 uppercase mb-3 block">02. Zhvillimi</span>
+                    <h4 class="lang font-heading text-base mb-3 uppercase" data-sq="Precizioni" data-de="Präzision">Precizioni</h4>
+                    <p class="lang text-sm text-neutral-400 leading-relaxed font-light" data-sq="Teknologjia e fundit për plane precize." data-de="Neueste Technologie für Pläne.">Teknologjia e fundit për plane precize, duke balancuar estetikën me funksionalitetin.</p>
+                </div>
+                <div class="md:col-span-4 reveal">
+                    <span class="text-[9px] tracking-[0.5em] text-neutral-500 uppercase mb-3 block">03. Realizimi</span>
+                    <h4 class="lang font-heading text-base mb-3 uppercase" data-sq="Zbatimi" data-de="Bau">Zbatimi</h4>
+                    <p class="lang text-sm text-neutral-400 leading-relaxed font-light" data-sq="Prezent në çdo hap të ndërtimit." data-de="Präsent bei jedem Bauschritt.">Prezent në çdo hap të ndërtimit, duke siguruar që vizioni të jetë i paprekur.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20 md:mb-24 items-center">
+            <div class="md:col-span-5 reveal">
+                <h3 class="lang font-heading text-xl md:text-2xl uppercase mb-6" data-sq="Vizioni Im" data-de="Vision">Vizioni Im</h3>
+                <p class="lang text-neutral-300 font-light leading-relaxed text-base md:text-lg italic mb-6"
+                   data-sq="&ldquo;Arkitektura është arti i heshtjes brenda zhurmës urbane. Punoj me dritën si material ndërtimi.&rdquo;"
+                   data-de="&ldquo;Architektur ist die Kunst der Stille.&rdquo;">
+                   "Arkitektura është arti i heshtjes brenda zhurmës urbane. Më pëlqen të punoj me dritën natyrale si material ndërtimi dhe të krijoj hapësira që marrin frymë."
+                </p>
+                <div class="flex flex-wrap gap-2 opacity-50">
+                    <span class="text-[9px] border border-white/20 px-2 py-1 uppercase tracking-widest">AutoCAD</span>
+                    <span class="text-[9px] border border-white/20 px-2 py-1 uppercase tracking-widest">Revit</span>
+                    <span class="text-[9px] border border-white/20 px-2 py-1 uppercase tracking-widest">Rhino</span>
+                </div>
+            </div>
+            <div class="md:col-span-7 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070" class="w-full h-[300px] md:h-[400px] object-cover grayscale image-reveal" alt="Vizioni">
+            </div>
+        </section>
+
+        <section class="mb-20 md:mb-24 reveal">
+            <h5 class="lang text-[9px] tracking-[0.5em] text-neutral-500 uppercase mb-8 text-center" data-sq="Partnerët" data-de="Partner">Partnerët</h5>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-30 grayscale hover:opacity-100 transition duration-700">
+                <span class="font-heading text-sm md:text-base">LUMINA</span>
+                <span class="font-heading text-sm md:text-base">STRUCTURE</span>
+                <span class="font-heading text-sm md:text-base">DESIGN-CO</span>
+                <span class="font-heading text-sm md:text-base">URBAN-X</span>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-12 px-6 md:px-12 border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="lang font-heading text-[9px] tracking-[0.4em] opacity-30 uppercase" data-sq="Ekselencë arkitektonike" data-de="Architektonische Exzellenz">Ekselencë arkitektonike</p>
+            <div class="flex gap-8 text-[9px] tracking-widest uppercase opacity-60">
+                <a href="#" class="hover:opacity-100 transition">Instagram</a>
+                <a href="#" class="hover:opacity-100 transition">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
+
+        const trigger = document.getElementById('menu-trigger');
+        const overlay = document.getElementById('mobile-overlay');
+        trigger.addEventListener('click', () => {
+            trigger.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.image-reveal').forEach(el => observer.observe(el));
+
+        window.addEventListener('load', () => {
+            gsap.utils.toArray('.reveal').forEach((el) => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: "top 95%" },
+                    y: 15,
+                    opacity: 0, 
+                    duration: 1, 
+                    ease: "sine.out"
+                });
+            });
+        });
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.innerText = text;
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if(document.getElementById(`btn-${lang}`)) {
+                document.getElementById(`btn-${lang}`).classList.add('active');
+            }
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('selectedLanguage') || 'sq';
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>

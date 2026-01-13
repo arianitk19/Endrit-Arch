@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="sq" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shërbimet | Endrit Krasniqi</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root { --bg: #080808; --text: #ffffff; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        .font-heading { font-family: 'Syncopate', sans-serif; }
+        
+        #mobile-overlay { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: clip-path 0.8s cubic-bezier(0.85, 0, 0.15, 1); }
+        #mobile-overlay.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        
+        /* Shërbimet Styling */
+        .service-card { border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); position: relative; overflow: hidden; }
+        .service-card:hover { background-color: rgba(255,255,255,0.02); padding-left: 30px; border-bottom-color: rgba(255,255,255,0.2); }
+        .service-number { font-size: 10px; tracking: 0.5em; opacity: 0.3; margin-bottom: 10px; display: block; }
+        
+        .lang-btn.active { opacity: 1; border-bottom: 1px solid white; }
+        .burger-line { transition: 0.4s ease; }
+        .active #line1 { transform: translateY(5px) rotate(45deg); }
+        .active #line2 { transform: translateY(-5px) rotate(-45deg); width: 100% !important; }
+
+        .reveal { opacity: 0; transform: translateY(20px); }
+    </style>
+</head>
+<body>
+    <div id="cursor" class="fixed w-4 h-4 bg-white rounded-full pointer-events-none z-[999] mix-blend-difference hidden md:block"></div>
+
+    <header class="fixed top-0 w-full z-[110] px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="font-heading text-lg tracking-[0.3em] font-bold">E.KRASNIQI</a>
+        <nav class="hidden md:flex items-center space-x-12 text-[10px] tracking-[0.4em] uppercase font-medium">
+            <a href="index.html" class="lang hover:text-neutral-400 transition" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang hover:text-neutral-400 transition" data-sq="Rreth" data-de="Über uns">Rreth</a>
+            <a href="services.html" class="lang underline underline-offset-8" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang hover:text-neutral-400 transition" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            <div class="flex gap-3 ml-6 border-l border-white/20 pl-6">
+                <button onclick="changeLanguage('sq')" id="btn-sq" class="lang-btn opacity-40 hover:opacity-100 transition">SQ</button>
+                <button onclick="changeLanguage('de')" id="btn-de" class="lang-btn opacity-40 hover:opacity-100 transition">DE</button>
+            </div>
+        </nav>
+        <button id="menu-trigger" class="md:hidden flex flex-col items-end gap-2 relative z-[120]">
+            <span id="line1" class="burger-line w-8 h-[1px] bg-white"></span>
+            <span id="line2" class="burger-line w-5 h-[1px] bg-white"></span>
+        </button>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-[#0f0f0f] z-[105] flex flex-col justify-center px-8 md:hidden text-center">
+        <div class="space-y-8">
+            <a href="index.html" class="lang block font-heading text-4xl uppercase" data-sq="Fillimi" data-de="Startseite">Fillimi</a>
+            <a href="about.html" class="lang block font-heading text-4xl uppercase" data-sq="Rreth" data-de="Über uns">Rreth</a>
+            <a href="services.html" class="lang block font-heading text-4xl uppercase" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</a>
+            <a href="contact.html" class="lang block font-heading text-4xl uppercase" data-sq="Kontakt" data-de="Kontakt">Kontakt</a>
+            <div class="flex justify-center gap-8 mt-12 pt-10 border-t border-white/5">
+                <button onclick="changeLanguage('sq')" class="text-xs tracking-widest uppercase">Shqip</button>
+                <button onclick="changeLanguage('de')" class="text-xs tracking-widest uppercase">Deutsch</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-32 md:pt-48 px-6 md:px-12">
+        <section class="mb-20 md:mb-24">
+            <h1 class="lang font-heading text-4xl md:text-7xl uppercase leading-none mb-6 reveal" data-sq="Shërbimet" data-de="Leistungen">Shërbimet</h1>
+            <p class="lang max-w-xl text-neutral-400 font-light text-sm md:text-base reveal" 
+               data-sq="Zgjidhje arkitektonike që harmonizojnë nevojat tuaja me estetikën bashkëkohore." 
+               data-de="Architektonische Lösungen, die Ihre Bedürfnisse mit zeitgenössischer Ästhetik harmonisieren.">
+               Zgjidhje arkitektonike që harmonizojnë nevojat tuaja me estetikën bashkëkohore.
+            </p>
+        </section>
+
+        <section class="mb-24">
+            <div class="service-card py-10 md:py-14 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 reveal">
+                <div>
+                    <span class="service-number">01.</span>
+                    <h3 class="lang font-heading text-xl md:text-3xl uppercase" data-sq="Arkitekturë" data-de="Architektur">Arkitekturë</h3>
+                </div>
+                <p class="lang max-w-md text-sm text-neutral-400 font-light leading-relaxed" 
+                   data-sq="Dizajnim i strukturave moderne rezidenciale dhe komerciale, nga koncepti deri në detajet e fundit teknike." 
+                   data-de="Planung moderner Wohn- und Gewerbestrukturen, vom Konzept bis ins letzte technische Detail.">
+                   Dizajnim i strukturave moderne rezidenciale dhe komerciale, nga koncepti deri në detajet e fundit teknike.
+                </p>
+            </div>
+
+            <div class="service-card py-10 md:py-14 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 reveal">
+                <div>
+                    <span class="service-number">02.</span>
+                    <h3 class="lang font-heading text-xl md:text-3xl uppercase" data-sq="Dizajn Interieri" data-de="Innenarchitektur">Dizajn Interieri</h3>
+                </div>
+                <p class="lang max-w-md text-sm text-neutral-400 font-light leading-relaxed" 
+                   data-sq="Kurimi i hapësirave të brendshme duke përdorur dritën, teksturat dhe materialet për të krijuar ambient unik." 
+                   data-de="Kuratierung von Innenräumen unter Verwendung von Licht, Texturen und Materialien.">
+                   Kurimi i hapësirave të brendshme duke përdorur dritën, teksturat dhe materialet për të krijuar ambient unik.
+                </p>
+            </div>
+
+            <div class="service-card py-10 md:py-14 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 reveal">
+                <div>
+                    <span class="service-number">03.</span>
+                    <h3 class="lang font-heading text-xl md:text-3xl uppercase" data-sq="Konsulencë" data-de="Beratung">Konsulencë</h3>
+                </div>
+                <p class="lang max-w-md text-sm text-neutral-400 font-light leading-relaxed" 
+                   data-sq="Këshillim profesional mbi fizibilitetin e projekteve dhe zgjedhjen e materialeve të qëndrueshme." 
+                   data-de="Professionelle Beratung zur Projektfeasibility und Materialauswahl.">
+                   Këshillim profesional mbi fizibilitetin e projekteve dhe zgjedhjen e materialeve të qëndrueshme.
+                </p>
+            </div>
+        </section>
+
+       <section class="mb-24 py-16 border-t border-white/5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+            <h4 class="lang font-heading text-lg uppercase mb-6" data-sq="Qasja Jonë" data-de="Unser Ansatz">Qasja Jonë</h4>
+            <p class="lang text-neutral-400 font-light text-sm leading-relaxed" 
+               data-sq="Ne besojmë se çdo projekt meriton një qasje unike. Procesi ynë është transparent, inovativ dhe gjithmonë i fokusuar te cilësia e jetesës brenda hapësirës." 
+               data-de="Wir glauben, dass jedes Projekt einen einzigartigen Ansatz verdient.">
+                Ne besojmë se çdo projekt meriton një qasje unike. Procesi ynë është transparent, inovativ dhe gjithmonë i fokusuar te cilësia e jetesës brenda hapësirës.
+            </p>
+        </div>
+        
+        <div class="reveal flex justify-end">
+            <div class="w-full md:w-4/5 aspect-video bg-neutral-900 border border-white/10 overflow-hidden relative group cursor-none">
+                
+                <video 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline 
+                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] scale-110 group-hover:scale-100">
+                    
+                    <source src="Images/7817046-hd_1920_1080_25fps.mp4" type="video/mp4">
+                    
+                    Browseri juaj nuk e mbështet videon.
+                </video>
+
+                <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition duration-1000 pointer-events-none"></div>
+                
+                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <span class="text-[8px] tracking-[0.3em] uppercase text-white font-light">Play Showreel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    <footer class="py-12 px-6 md:px-12 border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="lang font-heading text-[9px] tracking-[0.4em] opacity-20 uppercase" data-sq="Endrit Krasniqi Arkitekturë" data-de="Endrit Krasniqi Architektur">Endrit Krasniqi Arkitekturë</p>
+            <div class="flex gap-8 text-[9px] tracking-widest uppercase opacity-40">
+                <a href="#" class="hover:opacity-100 transition">Instagram</a>
+                <a href="#" class="hover:opacity-100 transition">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const trigger = document.getElementById('menu-trigger');
+        const overlay = document.getElementById('mobile-overlay');
+        trigger.onclick = () => { trigger.classList.toggle('active'); overlay.classList.toggle('active'); };
+        
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.innerText = text;
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if(document.getElementById(`btn-${lang}`)) {
+                document.getElementById(`btn-${lang}`).classList.add('active');
+            }
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        window.onload = () => { 
+            changeLanguage(localStorage.getItem('selectedLanguage') || 'sq'); 
+            
+            // Animacioni i thjeshtë dhe elegant
+            gsap.utils.toArray('.reveal').forEach((el) => {
+                gsap.to(el, {
+                    scrollTrigger: { trigger: el, start: "top 95%" },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "expo.out"
+                });
+            });
+        };
+
+        document.addEventListener('mousemove', (e) => { 
+            gsap.to('#cursor', { x: e.clientX, y: e.clientY, duration: 0.1 }); 
+        });
+    </script>
+</body>
+</html>
